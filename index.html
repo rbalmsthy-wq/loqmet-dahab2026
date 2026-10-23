@@ -1,117 +1,26 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لقمة دهب - فطار الموظفين والطلاب</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>لقمة دهب</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
-*{font-family:'Cairo',sans-serif;box-sizing:border-box}
-body{margin:0;background:#FFFDF7;color:#222}
-header{background:linear-gradient(135deg,#FF8A00,#FF3D00);color:#fff;padding:35px 20px;text-align:center}
-header h1{margin:0;font-size:40px;font-weight:900}
-header .slogan{font-size:20px;margin-top:8px}
-.badge{background:#fff;color:#FF3D00;padding:6px 14px;border-radius:20px;font-weight:700;display:inline-block;margin-top:12px}
-.container{max-width:620px;margin:auto;padding:20px}
-.ad-box{background:#fff;border:2px dashed #FF8A00;border-radius:16px;padding:18px;margin:20px 0;line-height:1.9}
-.ad-box h2{color:#FF3D00;margin:0 0 10px}
-.box-type{display:flex;gap:12px;margin:20px 0}
-.box-option{flex:1;background:#fff;border:2px solid #eee;border-radius:16px;padding:15px;text-align:center;cursor:pointer}
-.box-option.active{border-color:#FF6B00;background:#FFF1E6;transform:scale(1.02)}
-.price{font-size:26px;font-weight:900;color:#FF6B00}
-.filling-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}
-.filling{background:#fff;border:1.5px solid #eee;border-radius:12px;padding:12px;text-align:center;cursor:pointer}
-.filling.selected{background:#FF6B00;color:#fff;border-color:#FF6B00;font-weight:700}
-.counter{display:flex;align-items:center;justify-content:center;gap:20px;background:#fff;padding:12px;border-radius:12px;margin:15px 0;border:1px solid #eee}
-.counter button{width:42px;height:42px;border-radius:50%;border:none;background:#FF6B00;color:#fff;font-size:22px;cursor:pointer}
-.input{width:100%;padding:13px;border-radius:12px;border:1.5px solid #ddd;margin:8px 0;font-size:16px}
-.btn-whatsapp{width:100%;background:#25D366;color:#fff;border:none;padding:16px;border-radius:14px;font-size:21px;font-weight:900;cursor:pointer;margin-top:10px}
-footer{background:#222;color:#aaa;padding:20px;text-align:center;font-size:14px;margin-top:30px}
+body{font-family:Tahoma;background:#fffaf3;margin:0}.header{background:#fff;text-align:center;padding:20px}.header h1{color:#b7791f}.container{max-width:550px;margin:auto;padding:15px}.box-card{background:#fff;border-radius:15px;padding:15px;margin:15px 0;box-shadow:0 3px 10px #0001;border:2px solid #fbbf24}.box-head{display:flex;justify-content:space-between}.bar{height:8px;background:#eee;border-radius:5px;margin:10px 0;overflow:hidden}.fill{height:100%;background:#b7791f;width:0%;transition:0.3s}.item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #eee}.controls button{width:32px;height:32px;border-radius:50%;border:1px solid #fbbf24;background:#fff;font-size:20px}.add-box{width:100%;padding:15px;border:2px dashed #b7791f;background:#fffaf0;border-radius:12px;font-weight:bold;margin-top:10px}.total-box{background:#111;color:#fff;padding:20px;border-radius:18px;text-align:center;position:sticky;bottom:10px}.total-box button{background:#fbbf24;color:#000;border:none;padding:14px;width:100%;border-radius:30px;font-weight:bold;font-size:18px;margin-top:10px}
 </style>
 </head>
 <body>
-<header>
-<h1>🥪 لقمة دهب</h1>
-<div class="slogan">فطار خفيف.. نضيف.. يشبع ويقوي</div>
-<div class="badge">توصيل سخن من البيت للبيت</div>
-</header>
-<div class="container">
-<div class="ad-box">
-<h2>📚 للطلاب والموظفين.. فطارك عندنا!</h2>
-<p>
-مستعجل الصبح؟ رايح شغلك أو مدرستك ومش لاحق تفطر؟<br>
-<strong>لقمة دهب</strong> عملتلك <strong>بوكس الفطار الخفيف</strong> اللي هيخليك تبدأ يومك بطاقة ونشاط.<br><br>
-✅ عيش طازة وفينو قطن<br>
-✅ حشوات بيتي نضيفة 100%<br>
-✅ معمول بحب في البيت مش مطعم<br>
-✅ خفيف على المعدة ويشبع لحد الغدا<br>
-✅ سعر على قد جيب الطالب والموظف<br><br>
-<strong>سيب الفطار علينا وابدأ يومك بلقمة دهب!</strong>
-</p>
-</div>
-<h3>اختار حجم البوكس:</h3>
-<div class="box-type">
-<div class="box-option active" id="smallBox" onclick="selectBox('small')"><h3>البوكس الصغير</h3><div>3 سندوتشات</div><div class="price">30 جنيه</div><div style="font-size:13px;color:#666">مثالي للطالب</div></div>
-<div class="box-option" id="bigBox" onclick="selectBox('big')"><h3>البوكس الكبير</h3><div>4 سندوتشات</div><div class="price">40 جنيه</div><div style="font-size:13px;color:#666">يشبع للموظف</div></div>
-</div>
-<h3>اختار الحشو (لازم <span id="needCount">3</span>):</h3>
-<div class="filling-grid" id="fillings"></div>
-<h3>الكمية:</h3>
-<div class="counter">
-<button onclick="changeQty(-1)">-</button>
-<span id="qty" style="font-size:24px;font-weight:900">1</span>
-<button onclick="changeQty(1)">+</button>
-</div>
-<input id="custName" class="input" placeholder="اسمك (مثال: أحمد)">
-<input id="custPhone" class="input" placeholder="رقم تليفونك">
-<input id="custAddr" class="input" placeholder="عنوان التسليم - مدرسة / شركة / بيت">
-<button class="btn-whatsapp" onclick="sendOrder()">اطلب بوكسك الآن على واتساب 📲</button>
-<p style="text-align:center;color:#888;font-size:13px">الطلب هيجيلنا فوراً على واتساب ونكلمك نأكد</p>
-</div>
-<footer>لقمة دهب - أكل بيتي بطعم الدهب | القاهرة</footer>
+<div class="header"><h1>لقمة دهب ✨</h1><p>اعمل البوكس (3 لـ 5) - تقدر تطلب كذا بوكس</p></div>
+<div class="container"><div id="boxes"></div><button class="add-box" onclick="addBox()">+ أضف بوكس جديد 📦</button><div class="total-box"><h2 style="margin:0">الإجمالي: <span id="total">0</span> ج</h2><small>شامل 5ج توصيل</small><button onclick="order()">اطلب على واتساب 📲</button></div></div>
 <script>
-const fillingsList=["جبنة رومي","لانشون بيف","لانشون حلواني","حلاوة بالقشطة","قشطة بالعسل","جبنة كريمي","جبنة بيضاء","بيض أومليت","بيض مسلوق"];
-let selectedBox='small'; let needed=3; let selected=[]; let qty=1;
-const grid=document.getElementById('fillings');
-fillingsList.forEach(f=>{
-  const d=document.createElement('div'); d.className='filling'; d.textContent=f;
-  d.onclick=()=>toggleFilling(f,d); grid.appendChild(d);
-});
-function selectBox(type){
-  selectedBox=type; needed= type==='small'?3:4;
-  document.getElementById('needCount').textContent=needed;
-  document.getElementById('smallBox').classList.toggle('active',type==='small');
-  document.getElementById('bigBox').classList.toggle('active',type==='big');
-  selected=[]; document.querySelectorAll('.filling').forEach(e=>e.classList.remove('selected'));
-}
-function toggleFilling(f,el){
-  const idx=selected.indexOf(f);
-  if(idx>-1){selected.splice(idx,1); el.classList.remove('selected');}
-  else{
-    if(selected.length>=needed){alert('البوكس ده اخره '+needed+' سندوتشات بس - لو عايز اكتر زود الكمية'); return;}
-    selected.push(f); el.classList.add('selected');
-  }
-}
-function changeQty(d){qty=Math.max(1,qty+d); document.getElementById('qty').textContent=qty;}
-function sendOrder(){
-  const name=document.getElementById('custName').value||'';
-  const phone=document.getElementById('custPhone').value||'';
-  const addr=document.getElementById('custAddr').value||'';
-  if(selected.length!==needed){alert('اختار '+needed+' حشوات الأول'); return;}
-  if(!name||!phone){alert('اكتب اسمك ورقمك عشان نعرف نوصلك'); return;}
-  const boxName = selectedBox==='small'?'البوكس الصغير 3 سندوتشات - 30ج':'البوكس الكبير 4 سندوتشات - 40ج';
-  const total = (selectedBox==='small'?30:40)*qty;
-  let msg = `طلب جديد - لقمة دهب 🥪%0A%0A`;
-  msg+=`👤 الاسم: ${name}%0A`;
-  msg+=`📞 التليفون: ${phone}%0A`;
-  msg+=`📍 العنوان: ${addr}%0A%0A`;
-  msg+=`📦 النوع: ${boxName}%0A`;
-  msg+=`🔢 الكمية: ${qty} بوكس%0A`;
-  msg+=`🥪 الحشو: ${selected.join(' - ')}%0A%0A`;
-  msg+=`💰 الإجمالي: ${total} جنيه%0A`;
-  const myNumber = "201227099076";
-  window.open(`https://wa.me/${myNumber}?text=${msg}`,'_blank');
-}
+const MAX=5,MIN=3,DELIVERY=5;
+const items=[{name:"بيض أومليت",price:10},{name:"بيض مسلوق",price:10},{name:"جبنة بيضاء",price:10},{name:"حلاوة بالقشطة",price:10},{name:"جبنة رومي",price:12},{name:"لانشون حلواني",price:12},{name:"لانشون بيف",price:12},{name:"جبنة كيري",price:12},{name:"قشطة بالعسل",price:15},{name:"ميكس بيض+رومي+لانشون",price:15},{name:"ميكس كيري+رومي",price:15},{name:"ميكس كيري+لانشون",price:15}];
+let boxes=[{cart:{}}];
+function renderBoxes(){let html="";boxes.forEach((box,bIndex)=>{let count=Object.values(box.cart).reduce((a,b)=>a+b,0);let price=0;for(let i in box.cart)price+=box.cart[i]*(items[i]?.price||0);let status=count<MIN?`ناقص ${MIN-count}`:`${count}/${MAX} تمام`;html+=`<div class="box-card"><div class="box-head"><b>📦 بوكس ${bIndex+1}</b><div>${status} - ${price}ج</div></div><div class="bar"><div class="fill" style="width:${Math.min(100,count/MAX*100)}%"></div></div>`;items.forEach((it,i)=>{let q=box.cart[i]||0;html+=`<div class="item"><div><b>${it.name}</b> <small style="color:#d97706">${it.price}ج</small></div><div class="controls"><button onclick="change(${bIndex},${i},-1)">-</button><span style="margin:0 6px">${q}</span><button onclick="change(${bIndex},${i},1)">+</button></div></div>`;});if(boxes.length>1)html+=`<button onclick="removeBox(${bIndex})" style="color:red;background:none;border:none">حذف البوكس</button>`;html+=`</div>`;});document.getElementById("boxes").innerHTML=html;calcTotal();}
+function change(bIndex,i,d){let box=boxes[bIndex];let count=Object.values(box.cart).reduce((a,b)=>a+b,0);if(d>0&&count>=MAX){alert("البوكس اتملى! أخره 5");return;}box.cart[i]=Math.max(0,(box.cart[i]||0)+d);renderBoxes();}
+function addBox(){boxes.push({cart:{}});renderBoxes();}
+function removeBox(i){boxes.splice(i,1);if(boxes.length==0)boxes=[{cart:{}}];renderBoxes();}
+function calcTotal(){let total=0,allOk=true,totalBoxes=0;boxes.forEach(b=>{let c=Object.values(b.cart).reduce((a,v)=>a+v,0);if(c>0){totalBoxes++;if(c<MIN)allOk=false;for(let k in b.cart)total+=b.cart[k]*items[k].price;}});if(totalBoxes>0)total+=DELIVERY;document.getElementById("total").innerText=total;return{total,allOk,totalBoxes};}
+function order(){let {total,allOk,totalBoxes}=calcTotal();if(totalBoxes==0){alert("املا بوكس واحد!");return;}if(!allOk){alert("كل بوكس لازم 3 لـ 5");return;}let msg=`طلب لقمة دهب - ${totalBoxes} بوكس:%0A`;boxes.forEach((b,idx)=>{let c=Object.values(b.cart).reduce((a,v)=>a+v,0);if(c==0)return;let p=0;msg+=`%0A📦 بوكس ${idx+1} (${c}):%0A`;for(let k in b.cart){if(b.cart[k]>0){msg+=`- ${items[k].name} x${b.cart[k]}%0A`;p+=b.cart[k]*items[k].price;}}msg+=`سعر: ${p}ج%0A`;});msg+=`%0Aتوصيل: ${DELIVERY}ج%0Aالإجمالي: ${total}ج`;window.open(`https://wa.me/201227099076?text=${msg}`,"_blank");}
+renderBoxes();
 </script>
 </body>
 </html>
