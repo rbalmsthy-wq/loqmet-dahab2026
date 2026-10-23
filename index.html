@@ -1,13 +1,134 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>لقمة دهب</title><style>body{font-family:Tahoma;background:#fffaf3;margin:0}.header{background:#fff;text-align:center;padding:20px;border-bottom:3px solid #fbbf24}.dua{color:#b7791f;font-weight:bold}.header img{width:110px;border-radius:50%;border:3px solid #fbbf24}.badge{background:#fbbf24;padding:5px 12px;border-radius:20px;font-weight:bold}.container{max-width:550px;margin:auto;padding:12px}.box-card{background:#fff;border-radius:12px;padding:12px;margin:12px 0;border:2px solid #fbbf24}.item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee}.controls button{width:30px;height:30px;border-radius:50%;border:1px solid #fbbf24;background:#fff}.total-box{background:#111;color:#fff;padding:15px;border-radius:15px;text-align:center;position:sticky;bottom:5px}.total-box input{width:90%;padding:10px;border-radius:8px;border:none;margin:6px 0;text-align:center}.total-box button{background:#fbbf24;color:#000;border:none;padding:12px;width:100%;border-radius:20px;font-weight:bold;margin-top:8px}.add-box{width:100%;padding:12px;border:2px dashed #b7791f;background:#fffaf0;border-radius:10px}</style></head><body>
-<div class="header"><div class="dua">اللهم صل وسلم وبارك على سيدنا ومولانا محمد ﷺ</div><img src="https://i.ibb.co/3y8V7qX/logo.png" style="display:none" onerror="this.style.display='none'"><h1 style="color:#b7791f;margin:5px">لقمة دهب ✨</h1><div class="badge">📍 زهرة العاصمة</div><div style="color:#d97706;font-size:13px;margin-top:8px;background:#fffbeb;padding:8px;border-radius:8px">🏠 بنشتغل من البيت بكل حب - بنوصل لحد باب شقتك<br>⏰ من 6 الصبح لـ 12 الضهر</div></div>
-<div class="container"><div id="boxes"></div><button class="add-box" onclick="addBox()">+ أضف بوكس جديد 📦</button><div class="total-box"><h2 style="margin:0">الإجمالي: <span id="total">0</span> ج</h2><small>شامل 5ج توصيل</small><input id="address" placeholder="عنوانك (عمارة / شقة)"><input id="time" placeholder="ميعاد الاستلام"><button onclick="order()">اطلب على واتساب 📲</button></div></div>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لقمة دهب - زهرة العاصمة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
+body{background:#FFF8E7;color:#4A2E0A}
+.header{text-align:center;padding:20px 15px;background:#fff;border-bottom:3px solid #D4A017}
+.dua{font-size:14px;color:#8B6B2F;margin-bottom:10px}
+.logo{width:110px;height:110px;background:#FFF8E7;border:3px solid #C49A3C;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#8B5A1E;font-size:20px;line-height:1.1}
+.title{font-size:26px;font-weight:800;color:#8B5A1E}
+.card{max-width:480px;margin:12px auto;background:#fff;border-radius:18px;padding:14px;box-shadow:0 4px 12px rgba(0,0,0,0.06);border:1px solid #F0D9A0}
+.section-title{font-weight:800;font-size:17px;margin-bottom:8px;color:#6B4A12}
+.info-box{background:#FFF3CD;border:1px dashed #D4A017;border-radius:12px;padding:10px;font-size:13px;line-height:1.7;text-align:center}
+.boxes-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.box-opt{border:2px solid #E9D5A0;border-radius:14px;padding:10px 3px;text-align:center;cursor:pointer;transition:0.2s;background:#FFFBF0}
+.box-opt.active{border-color:#C49A3C;background:#FFF0C0;transform:scale(1.05);box-shadow:0 4px 10px rgba(196,154,60,0.3)}
+.box-icon{font-size:24px}
+.box-label{font-size:11px;font-weight:800;margin-top:4px}
+.box-count{font-size:10px;color:#888}
+.items{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+.item{border:1.5px solid #E9D5A0;border-radius:10px;padding:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;background:#FFFEFB}
+.item.selected{border-color:#C49A3C;background:#FFF6D5}
+.item-info{font-size:12px;font-weight:700;line-height:1.2}
+.item-price{font-size:11px;color:#8B6B2F;font-weight:700}
+.item-check{width:22px;height:22px;border-radius:50%;border:1.5px solid #C49A3C;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.item.selected .item-check{background:#C49A3C;color:#fff}
+.counter{margin-top:10px;border-radius:10px;padding:9px;text-align:center;font-size:12px;font-weight:800}
+.bad{color:#B91C1C;background:#FEE2E2}
+.good{color:#065F46;background:#D1FAE5}
+.inputs{display:grid;gap:8px;margin-top:10px}
+.inputs input{width:100%;padding:11px;border-radius:10px;border:1.5px solid #E9D5A0;font-size:13px}
+.order-btn{width:100%;margin-top:12px;background:#C49A3C;color:#fff;border:none;padding:13px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer}
+.order-btn:disabled{background:#ccc}
+.footer{text-align:center;font-size:11px;color:#999;padding:12px}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="dua">اللهم صل وسلم وبارك على سيدنا ومولانا محمد ﷺ</div>
+<div class="logo">لقمة<br>دهب</div>
+<div class="title">لقمة دهب - زهرة العاصمة</div>
+<div style="font-size:12px;color:#666">من البيت بكل حب - كومباوند زهرة العاصمة</div>
+</div>
+<div class="card">
+<div class="section-title">📦 اختار عدد البوكسات (دوس على البوكس)</div>
+<div class="info-box">
+البوكس الواحد بيشيل من <b>3 لـ 5 سندوتشات</b> تختارهم بنفسك<br>
+تقدر تطلب <b>أكتر من بوكس</b> - دوس على عدد البوكسات اللي عايزه<br>
+سعر السندوتش من 10ج لـ 15ج + 5ج توصيل للبوكس الواحد
+</div>
+<div class="boxes-grid" id="boxesGrid">
+<div class="box-opt active" data-boxes="1"><div class="box-icon">📦</div><div class="box-label">بوكس 1</div><div class="box-count">3-5 ساندوتش</div></div>
+<div class="box-opt" data-boxes="2"><div class="box-icon">📦📦</div><div class="box-label">2 بوكس</div><div class="box-count">6-10 ساندوتش</div></div>
+<div class="box-opt" data-boxes="3"><div class="box-icon">📦📦📦</div><div class="box-label">3 بوكس</div><div class="box-count">9-15 ساندوتش</div></div>
+<div class="box-opt" data-boxes="4"><div class="box-icon">📦📦📦📦</div><div class="box-label">4 بوكس</div><div class="box-count">12-20 ساندوتش</div></div>
+</div>
+<div class="counter good" id="counter">اخترت: 1 بوكس - اختار من 3 لـ 5 أصناف</div>
+</div>
+<div class="card">
+<div class="section-title">🧀 الأصناف - 10ج و 12ج</div>
+<div class="items" id="basicItems"></div>
+</div>
+<div class="card">
+<div class="section-title">✨ خلطات مميزة - 12ج و 15ج</div>
+<div class="items" id="specialItems"></div>
+</div>
+<div class="card">
+<div class="section-title">📍 بيانات التوصيل</div>
+<div class="inputs">
+<input id="name" placeholder="اسمك - عمارة كام؟">
+<input id="phone" placeholder="رقمك (اختياري)">
+<input id="address" placeholder="العنوان بالتفصيل + ميعاد الاستلام - بكرة 7 الصبح مثلا">
+</div>
+<button class="order-btn" id="orderBtn" disabled>اختار الأصناف الأول</button>
+<div class="footer">بنستقبل طلبات بكرة من 1 الظهر لـ 1 بعد نص الليل<br>الدفع عند الاستلام - زهرة العاصمة ❤️</div>
+</div>
 <script>
-const MAX=5,MIN=3,DELIVERY=5;const items=[{name:"بيض أومليت",price:12},{name:"بيض مسلوق",price:10},{name:"جبنة عبور لاند",price:10},{name:"جبنة كيري علب",price:10},{name:"لانشون بيف",price:10},{name:"حلاوة بالقشطة",price:12},{name:"حلاوة بالعسل",price:12},{name:"قشطة بالعسل",price:12},{name:"لانشون حلواني",price:12},{name:"كيري علب على لانشون بيف",price:12},{name:"جبنة رومي",price:12},{name:"جبنة رومي على لانشون حلواني",price:12},{name:"جبنة رومي على كيري علب",price:12},{name:"جبنة رومي على بيض",price:15},{name:"كيري علب على لانشون حلواني",price:15},{name:"قشطة على عسل على حلاوة",price:15}];
-let boxes=[{cart:{}}];function renderBoxes(){let html="";boxes.forEach((box,bIndex)=>{let count=Object.values(box.cart).reduce((a,b)=>a+b,0);let price=0;for(let i in box.cart)price+=box.cart[i]*(items[i]?.price||0);html+=`<div class="box-card"><b>📦 بوكس ${bIndex+1} - ${count}/5 - ${price}ج</b>`;items.forEach((it,i)=>{let q=box.cart[i]||0;html+=`<div class="item"><div><b>${it.name}</b> ${it.price}ج</div><div class="controls"><button onclick="change(${bIndex},${i},-1)">-</button><span>${q}</span><button onclick="change(${bIndex},${i},1)">+</button></div></div>`;});html+=`</div>`;});document.getElementById("boxes").innerHTML=html;calcTotal();}
-function change(bIndex,i,d){let box=boxes[bIndex];let count=Object.values(box.cart).reduce((a,b)=>a+b,0);if(d>0&&count>=5){alert("البوكس اتملى!");return;}box.cart[i]=Math.max(0,(box.cart[i]||0)+d);renderBoxes();}
-function addBox(){boxes.push({cart:{}});renderBoxes();}
-function calcTotal(){let total=0,n=0;boxes.forEach(b=>{let c=Object.values(b.cart).reduce((a,v)=>a+v,0);if(c>0){n++;for(let k in b.cart)total+=b.cart[k]*items[k].price;}});if(n>0)total+=DELIVERY;document.getElementById("total").innerText=total;return{total,n};}
-function order(){let {total,n}=calcTotal();let addr=document.getElementById("address").value;let t=document.getElementById("time").value;if(n==0){alert("املا بوكس");return;}if(!addr||!t){alert("اكتب عنوانك وميعادك");return;}let msg=`طلب لقمة دهب - ${n} بوكس%0Aالعنوان: ${addr}%0Aالميعاد: ${t}%0Aالاجمالي: ${total}ج`;window.open(`https://wa.me/201227099076?text=${msg}`,"_blank");}
-renderBoxes();
-</script></body></html>
+const basic=[{name:"بيض مسلوق",price:10},{name:"جبنة عبور لاند",price:10},{name:"جبنة كيري علب",price:10},{name:"لانشون بيف",price:10},{name:"بيض أومليت",price:12},{name:"حلاوة بالقشطة",price:12},{name:"حلاوة بالعسل",price:12},{name:"قشطة بالعسل",price:12},{name:"لانشون حلواني",price:12}];
+const special=[{name:"كيري علب على لانشون بيف",price:12},{name:"جبنة رومي",price:12},{name:"جبنة رومي على لانشون حلواني",price:12},{name:"جبنة رومي على كيري علب",price:12},{name:"جبنة رومي على بيض",price:15},{name:"كيري علب على لانشون حلواني",price:15},{name:"قشطة على عسل على حلاوة",price:15}];
+let selectedBoxes=1;
+let selectedItems={};
+function renderItems(){
+const bDiv=document.getElementById('basicItems');
+const sDiv=document.getElementById('specialItems');
+bDiv.innerHTML='';sDiv.innerHTML='';
+[...basic,...special].forEach((it,idx)=>{
+const container=idx<basic.length?bDiv:sDiv;
+const qty=selectedItems[it.name]?.qty||0;
+const div=document.createElement('div');
+div.className='item'+(qty>0?' selected':'');
+div.innerHTML=`<div><div class="item-info">${it.name} ${qty>0?'x'+qty:''}</div><div class="item-price">${it.price}ج</div></div><div class="item-check">${qty>0?qty:'+'}</div>`;
+div.onclick=()=>toggleItem(it);
+container.appendChild(div);
+});
+updateCounter();
+}
+function toggleItem(it){
+if(selectedItems[it.name]){selectedItems[it.name].qty++; if(selectedItems[it.name].qty>5) delete selectedItems[it.name];} else {selectedItems[it.name]={price:it.price,qty:1};}
+renderItems();
+}
+function updateCounter(){
+const totalQty=Object.values(selectedItems).reduce((s,i)=>s+i.qty,0);
+const min=selectedBoxes*3; const max=selectedBoxes*5;
+const counter=document.getElementById('counter');
+const btn=document.getElementById('orderBtn');
+let totalPrice=Object.values(selectedItems).reduce((s,i)=>s+i.price*i.qty,0)+(selectedBoxes*5);
+counter.textContent=`اخترت: ${selectedBoxes} بوكس (${min}-${max} ساندوتش) | اخترت ${totalQty} | الإجمالي: ${totalPrice}ج`;
+if(totalQty<min){counter.className='counter bad';btn.disabled=true;btn.textContent=`اختار كمان ${min-totalQty} ساندوتش`;}
+else if(totalQty>max){counter.className='counter bad';btn.disabled=true;btn.textContent=`شيل ${totalQty-max} زيادة`;}
+else{counter.className='counter good';btn.disabled=false;btn.textContent=`اطلب ${selectedBoxes} بوكس - ${totalPrice}ج - واتساب ✅`;}
+}
+document.querySelectorAll('.box-opt').forEach(el=>{el.onclick=()=>{document.querySelectorAll('.box-opt').forEach(e=>e.classList.remove('active'));el.classList.add('active');selectedBoxes=parseInt(el.dataset.boxes);renderItems();}});
+function order(){
+const name=document.getElementById('name').value.trim();
+const phone=document.getElementById('phone').value.trim();
+const address=document.getElementById('address').value.trim();
+if(!name||!address){alert('اكتب اسمك وعنوانك وميعاد الاستلام');return;}
+const totalQty=Object.values(selectedItems).reduce((s,i)=>s+i.qty,0);
+let list='';let total=0;
+for(let k in selectedItems){let it=selectedItems[k];list+=`- ${k} (x${it.qty}) = ${it.price*it.qty}ج\n`;total+=it.price*it.qty;}
+let delivery=selectedBoxes*5;let grand=total+delivery;
+let msg=`طلب جديد - لقمة دهب %0A%0Aالاسم: ${name}%0Aالتلفون: ${phone}%0Aالعنوان: ${address}%0A%0Aعدد البوكسات: ${selectedBoxes} بوكس%0Aعدد السندوتشات: ${totalQty}%0A%0Aتفاصيل الأصناف:%0A${list}%0Aسعر السندوتشات: ${total}ج%0Aتوصيل (${selectedBoxes} بوكس): ${delivery}ج%0Aالإجمالي: ${grand}ج`;
+let waNumber="201227099076";
+window.open(`https://wa.me/${waNumber}?text=${msg}`,'_blank');
+}
+document.getElementById('orderBtn').onclick=order;
+renderItems();
+</script>
+</body>
+</html>
